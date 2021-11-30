@@ -1,0 +1,124 @@
+
+    html.Div([ # External row
+
+        html.Div([ # External 12-column
+
+            html.Div([ # Internal row
+
+                #Internal columns
+                html.Div([
+                ],
+                className = 'col-2'), # Blank 2 columns
+
+                #Filter pt 1
+                html.Div([
+
+                    html.Div([
+                        html.H5(
+                            children='Filters by Date:',
+                            style = {'text-align' : 'left', 'color' : corporate_colors['medium-blue-grey']}
+                        ),
+                        #Date range picker
+                        html.Div(['Select a date range: ',
+                            dcc.DatePickerRange(
+                                id='date-picker-sales',
+                                start_date = min_dt_str,
+                                end_date = max_dt_str,
+                                min_date_allowed = min_dt,
+                                max_date_allowed = max_dt,
+                                start_date_placeholder_text = 'Start date',
+                                display_format='DD-MMM-YYYY',
+                                first_day_of_week = 1,
+                                end_date_placeholder_text = 'End date',
+                                style = {'font-size': '12px','display': 'inline-block', 'border-radius' : '2px', 'border' : '1px solid #ccc', 'color': '#333', 'border-spacing' : '0', 'border-collapse' :'separate'})
+                        ], style = {'margin-top' : '5px'}
+                        )
+
+                    ],
+                    style = {'margin-top' : '10px',
+                            'margin-bottom' : '5px',
+                            'text-align' : 'left',
+                            'paddingLeft': 5})
+
+                ],
+                className = 'col-4'), # Filter part 1
+
+                #Filter pt 2
+                html.Div([
+
+                    html.Div([
+                        html.H5(
+                            children='Filters by Reporting Groups:',
+                            style = {'text-align' : 'left', 'color' : corporate_colors['medium-blue-grey']}
+                        ),
+                        #Reporting group selection l1
+                        html.Div([
+                            dcc.Dropdown(id = 'reporting-groups-l1dropdown-sales',
+                                options = repo_groups_l1_all,
+                                value = [''],
+                                multi = True,
+                                placeholder = "Select " +sales_fields['reporting_group_l1']+ " (leave blank to include all)",
+                                style = {'font-size': '13px', 'color' : corporate_colors['medium-blue-grey'], 'white-space': 'nowrap', 'text-overflow': 'ellipsis'}
+                                )
+                            ],
+                            style = {'width' : '70%', 'margin-top' : '5px'}),
+                        #Reporting group selection l2
+                        html.Div([
+                            dcc.Dropdown(id = 'reporting-groups-l2dropdown-sales',
+                                options = repo_groups_l2_all,
+                                value = [''],
+                                multi = True,
+                                placeholder = "Select " +sales_fields['reporting_group_l2']+ " (leave blank to include all)",
+                                style = {'font-size': '13px', 'color' : corporate_colors['medium-blue-grey'], 'white-space': 'nowrap', 'text-overflow': 'ellipsis'}
+                                )
+                            ],
+                            style = {'width' : '70%', 'margin-top' : '5px'})
+                    ],
+                    style = {'margin-top' : '10px',
+                            'margin-bottom' : '5px',
+                            'text-align' : 'left',
+                            'paddingLeft': 5})
+
+                ],
+                className = 'col-4'), 
+
+                html.Div([
+                ],
+                className = 'col-2')
+
+
+            ],
+            className = 'row') # Internal row
+
+        ],
+        className = 'col-12',
+        style = filterdiv_borderstyling) 
+
+    ],
+    className = 'row sticky-top'),
+    .DateRangePickerInput_arrow_svg, .DateRangePickerInput_arrow_svg_1 {
+  Height: 10px !important;
+  Width: 10px !important;
+}
+tr:hover {
+  background-color: rgb(41, 56, 55) !important;
+}
+#Create level 1 "country" dropdown options
+repo_groups_l1 = sales_import['Country'].unique()
+repo_groups_l1_all_2 = [
+    {'label' : k, 'value' : k} for k in sorted(repo_groups_l1)
+    ]
+repo_groups_l1_all_1 = [{'label' : '(Select All)', 'value' : 'All'}]
+repo_groups_l1_all = repo_groups_l1_all_1 + repo_groups_l1_all_2
+
+#Reporting group selection (layout)
+html.Div([
+    dcc.Dropdown(id = 'reporting-groups-l1dropdown-sales',
+        options = repo_groups_l1_all,
+        value = [''],
+        multi = True,
+        placeholder = "Select Countries (leave blank to include all)",
+        style = {'font-size': '13px', 'color' : corporate_colors['medium-blue-grey'], 'white-space': 'nowrap', 'text-overflow': 'ellipsis'}
+        )
+    ],
+    style = {'width' : '70%', 'margin-top' : '5px'})
